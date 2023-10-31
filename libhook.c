@@ -5,15 +5,12 @@
 #include <string.h>
 
 
-int puts(const char *s)
+ssize_t write(int fildes, const void *buf, size_t nbyte)
 {
-	int (*func) (const char *msg);
+	int (*func) (int fildes, const void *buf, size_t nbyte);
+	func = dlsym(RTLD_NEXT, "write");
 
-	func = dlsym(RTLD_NEXT, "puts");
-
-	if (!strcmp(s, "123zegikniet"))
-	{
-		return func("overwritten");
-	}
-	return func(s);
+	char *s =  "overwritten\n\0";
+	func(STDOUT_FILENO, s, strlen(s));
+	return func(fildes, buf, nbyte);
 }
