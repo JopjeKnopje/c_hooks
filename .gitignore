@@ -2,5 +2,5 @@
 compile_commands.json
 obj/
 app
-libft/build/libft.a
 Session.vim
+libhook.so
