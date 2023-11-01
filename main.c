@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 int main()
 {
 	char *s = "string 123\n\0";

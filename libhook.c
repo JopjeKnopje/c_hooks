@@ -1,8 +1,10 @@
+#define _GNU_SOURCE
 
 #include <stdio.h>
 #include <unistd.h>
 #include <dlfcn.h>
 #include <string.h>
+
 
 
 ssize_t write(int fildes, const void *buf, size_t nbyte)
