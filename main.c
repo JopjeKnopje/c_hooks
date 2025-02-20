@@ -1,12 +1,18 @@
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
+#include <unistd.h>
 
+
+
+int print(const char *s)
+{
+	size_t i = 0;
+	while (s[i])
+		i++;
+	return write(STDOUT_FILENO, s, i);
+}
 
 int main()
 {
-	char *s = "string 123\n\0";
-	write(STDOUT_FILENO, s, strlen(s));
-	return 0;
+	print("test123\n");
 }
