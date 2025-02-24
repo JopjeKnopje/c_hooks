@@ -7,9 +7,14 @@ This has a few benefits, its faster than a shared libary because the code is act
 
 - Shared (dynamic linked) libraries work a bit different, on glibc-based linux systems, starting up an ELF binary automatically causes the program loader to be loaded and run. This loader finds and loads all the other shared libaries used by the program.
 It does all of this at *runtime!*, which is nice if you have a large libary that a lot of programs use. For example `glfw` or literally `glibc` that way you can save space in your image.
-> It is important to note that none of the code from the shared libary is actually copied into the final executable. Instead, the linker copies some relocation and symbol table information that allows the loader to resolve the it at *loadtime*.
+> It is important to note that none of the code from the shared libary is actually copied into the final executable. Instead, the linker copies some relocation and symbol table information that allows the loader to resolve the it at ***loadtime***.
 
 When the loader loads and runs the partially linked executable, it notices it contains a `.interp` section, which contains the paths name of the dynamic linker. Instead of passing control to the application, as it would normally do, the loader loads and runs the dynamic linker. The dynamic linker then finishes the linking task by relocating the symbols and code 
+
+You can read the `.interp` section with
+```
+readelf app -a  |grep interp
+```
 
 
 
