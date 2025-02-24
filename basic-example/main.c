@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
-
-
 
 int print(const char *s)
 {
@@ -14,5 +10,6 @@ int print(const char *s)
 
 int main()
 {
-	print("test123\n");
+	print("Hello World\n");
+	return 0;
 }

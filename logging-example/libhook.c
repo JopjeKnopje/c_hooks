@@ -31,10 +31,9 @@ ssize_t write(int fildes, const void *buf, size_t nbyte)
 	int (*actual_write) (int fildes, const void *buf, size_t nbyte) = get_write();
 	// actual_write = dlsym(RTLD_NEXT, "write");
 
-
 	// char *s =  "overwritten\n\0";
 	const char *s = buf;
-	write_to_file("hihi_log.txt", s);
+	write_to_file("sussy_log.txt", s);
 	// actual_write(STDOUT_FILENO, s, strlen(s));
 	return actual_write(fildes, buf, nbyte);
 }

@@ -13,7 +13,7 @@ When the loader loads and runs the partially linked executable, it notices it co
 
 You can read the `.interp` section with
 ```
-readelf app -a  |grep interp
+readelf app -a | grep interp
 ```
 
 
@@ -35,28 +35,47 @@ You can check where to libarries are located at with.
 ldd <myapp>
 ```
 
-
-```
-ldd <file-name>
-```
-
 ### Compilation
 ![Compilation](https://i.imgur.com/LNddTmk.png)
 
 
 
 ## Hooking functions
-Cool, so now we know how dynamic libaries work, the realization is that apparently stuff gets linked on *runtime* which means we could hook onto that... 
+Cool, so now we know how dynamic libaries work, the realization is that apparently stuff gets linked on *runtime* which means we could hook onto that using our own shared library... 
+
 
 Most programs will use the `write()` function from libc, lets try to hook onto that.
 
+## Building a shared library
+This is simpler than you'd think. 
+
+> NOTE: All `.so` files should start with `lib` see [3.1.1](https://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html)
+
+
+((TODO Talk about flags))
+
+```
+gcc -fPIC -shared -ldl libhook.c -o libhook.so
+```
+
+
+
 
 ## LD_PRELOAD
+`LD_PRELOAD` is a configurable environment variable that allows users to specify a shared library to be loaded into memory for programs before other shared libraries.
 When the loader runs your program it will look at the `LD_PRELOAD` env variable for any libaries it needs, these libaries will be loaded before the intended libary gets loaded. we can use that to have an executable link with our "libc" before linking with intended one, allowing us to sit in the middle of them.
 
+((TODO make this text a bit clearer))
+I've included an example in `example-basic` which will just print some text, but when you run it with the following command, it will create a file called `sussy_log.txt` which will contain all the capured data passed to `write()`.
+```
+LD_PRELOAD=$(pwd)/libhook.so ./app
+```
+
+((TODO Show that its linking with our lib using ldd))
 
 
 ## Logging to a file
+((TODO Implement more from the rootkit thing))
 
 
 ## Hiding the executable
@@ -66,5 +85,8 @@ When the loader runs your program it will look at the `LD_PRELOAD` env variable 
 
 
 ## Resources
-[ELF Format Cheatsheet](https://gist.github.com/x0nu11byt3/bcb35c3de461e5fb66173071a2379779)
-[UNIX Loader process](https://unix.stackexchange.com/a/50346)
+- [ELF Format Cheatsheet](https://gist.github.com/x0nu11byt3/bcb35c3de461e5fb66173071a2379779)
+- [ELF Loaders, Libraries and Executables on Linux](https://dtrugman.medium.com/elf-loaders-libraries-and-executables-on-linux-e5cfce318f94)
+- [UNIX Loader process](https://unix.stackexchange.com/a/50346)
+- [Jynx2](https://github.com/chokepoint/Jynx2)
+- [Learn-C-By-Creating-A-Rootkit](https://h0mbre.github.io/Learn-C-By-Creating-A-Rootkit/#)
