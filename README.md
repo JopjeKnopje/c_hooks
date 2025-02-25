@@ -49,7 +49,7 @@ Most programs will use the `write()` function from libc, lets try to hook onto t
 ## Building a shared library
 This is simpler than you'd think. 
 
-> NOTE: All `.so` files should start with `lib` see [3.1.1](https://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html)
+> NOTE: All `.so` file names should start with `lib` see [3.1.1](https://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html)
 
 
 ((TODO Talk about flags))
