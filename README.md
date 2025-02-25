@@ -57,8 +57,30 @@ This is simpler than you'd think.
 ```
 gcc -fPIC -shared -ldl libhook.c -o libhook.so
 ```
+### `-fPIC`
+Position Indepenend Code, we want this so the symbols are not located at a specific address, instead they are relative to the main code of the executable.
 
 
+##### PIC
+```
+100: COMPARE REG1, REG2
+101: JUMP_IF_EQUAL CURRENT+10
+...
+111: NOP
+
+```
+##### NON-PIC
+```
+100: COMPARE REG1, REG2
+101: JUMP_IF_EQUAL 111
+...
+111: NOP
+```
+
+
+### `-shared`
+
+### `-ldl`
 
 
 ## LD_PRELOAD
@@ -66,12 +88,15 @@ gcc -fPIC -shared -ldl libhook.c -o libhook.so
 When the loader runs your program it will look at the `LD_PRELOAD` env variable for any libaries it needs, these libaries will be loaded before the intended libary gets loaded. we can use that to have an executable link with our "libc" before linking with intended one, allowing us to sit in the middle of them.
 
 ((TODO make this text a bit clearer))
-I've included an example in `example-basic` which will just print some text, but when you run it with the following command, it will create a file called `sussy_log.txt` which will contain all the capured data passed to `write()`.
+I've included an example in `example-basic` which will just print some text, but when you run it with the following command, it will replace the text passed into `write()`.
 ```
 LD_PRELOAD=$(pwd)/libhook.so ./app
 ```
+To see verify its linking with our `libhook.so` run.
+```
+LD_PRELOAD=$(pwd)/libhook.so ldd app
 
-((TODO Show that its linking with our lib using ldd))
+```
 
 
 ## Logging to a file
@@ -90,3 +115,4 @@ LD_PRELOAD=$(pwd)/libhook.so ./app
 - [UNIX Loader process](https://unix.stackexchange.com/a/50346)
 - [Jynx2](https://github.com/chokepoint/Jynx2)
 - [Learn-C-By-Creating-A-Rootkit](https://h0mbre.github.io/Learn-C-By-Creating-A-Rootkit/#)
+- [gcc -fPIC option](https://stackoverflow.com/a/5311538)
