@@ -79,8 +79,11 @@ Position Indepenend Code, we want this so the symbols are not located at a speci
 
 
 ### `-shared`
+Produce a shared object which can then be linked with other objects to form an executable.
 
 ### `-ldl`
+
+
 
 
 ## LD_PRELOAD
@@ -115,4 +118,6 @@ LD_PRELOAD=$(pwd)/libhook.so ldd app
 - [UNIX Loader process](https://unix.stackexchange.com/a/50346)
 - [Jynx2](https://github.com/chokepoint/Jynx2)
 - [Learn-C-By-Creating-A-Rootkit](https://h0mbre.github.io/Learn-C-By-Creating-A-Rootkit/#)
+-    
 - [gcc -fPIC option](https://stackoverflow.com/a/5311538)
+- [-shared option](https://stackoverflow.com/a/25085725)
