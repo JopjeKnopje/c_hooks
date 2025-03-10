@@ -1,4 +1,6 @@
 ## Intro
+This repo contians some examples regarding shared object hooking 
+
 ### Shared vs static libaries?
 
 - A static libary is a collection of `.obj` files containing the functionality of the library.
@@ -109,6 +111,8 @@ LD_PRELOAD=$(pwd)/libhook.so ldd app
 ## Hiding the executable
 
 
+
+## Hooking nginx?
 
 
 
