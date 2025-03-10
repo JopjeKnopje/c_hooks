@@ -6,7 +6,7 @@
 #include <string.h>
 #include <fcntl.h>
 
-// lovely syntax right here.
+// lovely syntax right here...
 static int (*get_write(void))(int, const void *, size_t)
 {
 	static int (*real_write) (int fildes, const void *buf, size_t nbyte) = NULL;
@@ -29,11 +29,7 @@ static void write_to_file(const char *f, const char *s)
 ssize_t write(int fildes, const void *buf, size_t nbyte)
 {
 	int (*actual_write) (int fildes, const void *buf, size_t nbyte) = get_write();
-	// actual_write = dlsym(RTLD_NEXT, "write");
 
-	// char *s =  "overwritten\n\0";
-	const char *s = buf;
-	write_to_file("sussy_log.txt", s);
-	// actual_write(STDOUT_FILENO, s, strlen(s));
+	write_to_file("sussy_log.txt", buf);
 	return actual_write(fildes, buf, nbyte);
 }
